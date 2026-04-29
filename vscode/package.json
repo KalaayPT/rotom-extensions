@@ -1,0 +1,36 @@
+{
+  "name": "rotom-vscode",
+  "displayName": "Rotom Language Support",
+  "description": "Language support for the Rotom scripting language",
+  "version": "0.1.0",
+  "publisher": "KalaayPT",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Programming Languages"],
+  "activationEvents": ["onLanguage:rotom"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [{
+      "id": "rotom",
+      "aliases": ["Rotom", "rotom"],
+      "extensions": [".rotom"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "rotom",
+      "scopeName": "source.rotom",
+      "path": "./syntaxes/rotom.tmLanguage.json"
+    }]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "20.x",
+    "typescript": "^5.3.0"
+  }
+}

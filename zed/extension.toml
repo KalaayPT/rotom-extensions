@@ -1,0 +1,15 @@
+id = "rotom"
+name = "Rotom"
+version = "0.1.0"
+schema_version = 1
+authors = ["KalaayPT"]
+description = "Rotom language support for Zed"
+repository = "https://github.com/KalaayPT/rotom-lang"
+
+[grammars.rotom]
+repository = "https://github.com/KalaayPT/rotom-lang"
+rev = "main"
+
+[language_servers.rotom-lsp]
+name = "Rotom LSP"
+languages = ["Rotom"]

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Rotom",
+  "scopeName": "source.rotom",
+  "fileTypes": [".rotom"],
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#preprocessor" },
+    { "include": "#keywords" },
+    { "include": "#control" },
+    { "include": "#operators" },
+    { "include": "#numbers" },
+    { "include": "#strings" },
+    { "include": "#functions" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        { "name": "comment.line.double-slash.rotom", "match": "//.*$" },
+        { "name": "comment.block.rotom", "begin": "/\\*", "end": "\\*/" }
+      ]
+    },
+    "preprocessor": {
+      "patterns": [
+        { "name": "meta.preprocessor.rotom", "match": "^\\s*(#include|#define)\\b.*$" }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        { "name": "keyword.control.rotom", "match": "\\b(function|action|alias|as|break|Jump|GoTo|End|Return|EndMovement)\\b" }
+      ]
+    },
+    "control": {
+      "patterns": [
+        { "name": "keyword.control.conditional.rotom", "match": "\\b(if|then|else|endif|match|with|where|case|endmatch)\\b" },
+        { "name": "keyword.control.repeat.rotom", "match": "\\b(while|do|endwhile)\\b" },
+        { "name": "constant.language.boolean.rotom", "match": "\\b(true|false)\\b" }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        { "name": "keyword.operator.rotom", "match": "(==|!=|<=|>=|\\+\\+|\\+\\+|&&|\\|\\||and|or|not|!|\\+|-\\*|/)" }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        { "name": "constant.numeric.hex.rotom", "match": "\\b0[xX][0-9a-fA-F]+\\b" },
+        { "name": "constant.numeric.decimal.rotom", "match": "\\b-?[0-9]+\\b" }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        { "name": "string.quoted.double.rotom", "begin": "\"", "end": "\"" }
+      ]
+    },
+    "functions": {
+      "patterns": [
+        { "name": "entity.name.function.rotom", "match": "\\b([A-Za-z_][A-Za-z0-9_]*)\\s*(?=\\()" },
+        { "name": "entity.name.function.rotom", "match": "(?<=^function\\s+)([A-Za-z_][A-Za-z0-9_]*)" }
+      ]
+    }
+  }
+}

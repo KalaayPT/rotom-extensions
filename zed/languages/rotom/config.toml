@@ -1,0 +1,5 @@
+name = "Rotom"
+grammar = "rotom"
+path_suffixes = ["rotom"]
+line_comments = ["// "]
+tab_size = 4
