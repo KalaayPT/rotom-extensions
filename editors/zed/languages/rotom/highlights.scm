@@ -1,0 +1,1 @@
+../../../../../tree-sitter-rotom/queries/highlights.scm
