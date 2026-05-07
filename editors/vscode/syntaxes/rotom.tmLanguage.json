@@ -22,29 +22,50 @@
     },
     "preprocessor": {
       "patterns": [
-        { "name": "meta.preprocessor.rotom", "match": "^\\s*(#include|#define)\\b.*$" }
+        {
+          "name": "meta.preprocessor.rotom",
+          "match": "^\\s*(#include|#define)\\b.*$"
+        }
       ]
     },
     "keywords": {
       "patterns": [
-        { "name": "keyword.control.rotom", "match": "\\b(function|action|alias|as|break|Jump|GoTo|End|Return|EndMovement)\\b" }
+        {
+          "name": "keyword.control.rotom",
+          "match": "\\b(script|action|alias|as|break|Jump|GoTo|End|Return|EndMovement|public|global)\\b"
+        }
       ]
     },
     "control": {
       "patterns": [
-        { "name": "keyword.control.conditional.rotom", "match": "\\b(if|then|else|endif|match|with|where|case|endmatch)\\b" },
-        { "name": "keyword.control.repeat.rotom", "match": "\\b(while|do|endwhile)\\b" },
-        { "name": "constant.language.boolean.rotom", "match": "\\b(true|false)\\b" }
+        {
+          "name": "keyword.control.conditional.rotom",
+          "match": "\\b(if|then|else|endif|match|with|case|endmatch)\\b"
+        },
+        {
+          "name": "keyword.control.repeat.rotom",
+          "match": "\\b(while|do|endwhile)\\b"
+        },
+        {
+          "name": "constant.language.boolean.rotom",
+          "match": "\\b(true|false)\\b"
+        }
       ]
     },
     "operators": {
       "patterns": [
-        { "name": "keyword.operator.rotom", "match": "(==|!=|<=|>=|\\+\\+|\\+\\+|&&|\\|\\||and|or|not|!|\\+|-\\*|/)" }
+        {
+          "name": "keyword.operator.rotom",
+          "match": "(==|!=|<=|>=|<|>|&&|\\|\\||\\band\\b|\\bor\\b|\\bnot\\b|!|\\+|\\-|\\*)"
+        }
       ]
     },
     "numbers": {
       "patterns": [
-        { "name": "constant.numeric.hex.rotom", "match": "\\b0[xX][0-9a-fA-F]+\\b" },
+        {
+          "name": "constant.numeric.hex.rotom",
+          "match": "\\b0[xX][0-9a-fA-F]+\\b"
+        },
         { "name": "constant.numeric.decimal.rotom", "match": "\\b-?[0-9]+\\b" }
       ]
     },
@@ -55,8 +76,29 @@
     },
     "functions": {
       "patterns": [
-        { "name": "entity.name.function.rotom", "match": "\\b([A-Za-z_][A-Za-z0-9_]*)\\s*(?=\\()" },
-        { "name": "entity.name.function.rotom", "match": "(?<=^function\\s+)([A-Za-z_][A-Za-z0-9_]*)" }
+        {
+          "name": "entity.name.function.rotom",
+          "match": "(?<=^\\s*(?:function|script)\\s+)([A-Za-z_][A-Za-z0-9_]*)"
+        },
+        {
+          "name": "entity.name.function.rotom",
+          "match": "(?<=^\\s*action\\s+)([A-Za-z_][A-Za-z0-9_]*)"
+        },
+        {
+          "name": "entity.name.function.rotom",
+          "match": "(?<=^\\s*)([A-Za-z_][A-Za-z0-9_]*)(?=\\s*:)",
+          "comment": "label definitions"
+        },
+        {
+          "name": "entity.name.function.rotom",
+          "match": "(?<=^\\s*)(\\.[A-Za-z_][A-Za-z0-9_]*)(?=\\s*:)",
+          "comment": "local label definitions"
+        },
+        {
+          "name": "entity.name.function.rotom",
+          "match": "\\b([A-Za-z_][A-Za-z0-9_]*)\\s*(?=\\()",
+          "comment": "call-style commands and expressions"
+        }
       ]
     }
   }

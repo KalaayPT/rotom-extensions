@@ -1,0 +1,8 @@
+# Editor extension build artifacts
+editors/vscode/node_modules/
+editors/vscode/out/
+editors/vscode/package-lock.json
+editors/zed/target/
+editors/zed/Cargo.lock
+editors/zed/extension.wasm
+editors/zed/grammars/

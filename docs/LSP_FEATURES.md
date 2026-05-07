@@ -1,40 +1,22 @@
-# LSP Features Matrix
-
-This document tracks which LSP capabilities `rotom-lsp` implements and their
-status.
-
-## Legend
-
-- ✅ Implemented
-- 🚧 In Progress
-- ❌ Not Started
-- 🔄 Planned
-
-## Capabilities
+# LSP Features
 
 | Capability | Status | Notes |
 |-----------|--------|-------|
-| **Lifecycle** |
-| `initialize` | ✅ | Server capabilities advertised |
-| `initialized` | ✅ | Log message |
-| `shutdown` | ✅ | No-op |
-| `textDocument/didOpen` | ✅ | Document cached |
-| `textDocument/didChange` | ✅ | Incremental sync |
-| `textDocument/didClose` | ✅ | Document removed |
-| **Diagnostics** |
-| `textDocument/publishDiagnostics` | 🚧 | Needs error-tolerant parser from rotom |
-| **Navigation** |
-| `textDocument/definition` | 🚧 | Alias -> alias def, Jump -> label def |
-| `textDocument/documentSymbol` | 🚧 | Functions, actions, labels, aliases |
-| `workspace/symbol` | ❌ | Needs workspace indexing |
-| **Completions** |
-| `textDocument/completion` | 🚧 | Commands, aliases, constants, labels |
-| `completionItem/resolve` | ❌ | Documentation on demand |
-| **Hover** |
-| `textDocument/hover` | 🚧 | Command docs from DB, alias values |
-| **Signature Help** |
-| `textDocument/signatureHelp` | ❌ | Command arg hints |
-| **Formatting** |
-| `textDocument/formatting` | ❌ | Auto-format Rotom source |
-| **Semantic Highlighting** |
-| `textDocument/semanticTokens` | 🔄 | Future: fine-grained token types |
+| `initialize` / `shutdown` | ✅ | |
+| `textDocument/didOpen/didChange/didClose` | ✅ | Incremental sync |
+| `textDocument/publishDiagnostics` | ✅ | Debounced 300ms |
+| `textDocument/definition` | ✅ | Scripts, labels, aliases, actions |
+| `textDocument/documentSymbol` | ✅ | Grouped: Scripts / Labels / Actions |
+| `textDocument/completion` | ✅ | Commands, constants, local symbols |
+| `textDocument/hover` | ✅ | Command docs, legacy aliases, constant values |
+| `textDocument/signatureHelp` | ✅ | Command arg hints |
+| `textDocument/inlayHint` | ✅ | Command parameter names |
+| `workspace/symbol` | ❌ | |
+| `textDocument/formatting` | ❌ | |
+| `textDocument/semanticTokens` | 🔄 | |
+
+## Editor Notes
+
+**VS Code:** All features work. CodeLens clicks open the reference peek view via `rotom.showReferences`.
+
+**Zed:** Diagnostics, completions, hover, go-to-definition, and inlay hints and Codelens work. Signature help may not trigger automatically.

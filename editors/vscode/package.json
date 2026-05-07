@@ -4,6 +4,7 @@
   "description": "Language support for the Rotom scripting language",
   "version": "0.1.0",
   "publisher": "KalaayPT",
+  "repository": { "type": "git", "url": "https://github.com/KalaayPT/rotom-extensions" },
   "engines": { "vscode": "^1.85.0" },
   "categories": ["Programming Languages"],
   "activationEvents": ["onLanguage:rotom"],
@@ -19,7 +20,32 @@
       "language": "rotom",
       "scopeName": "source.rotom",
       "path": "./syntaxes/rotom.tmLanguage.json"
-    }]
+    }],
+    "commands": [
+      {
+        "command": "rotom.noop",
+        "title": "Rotom: No-op"
+      },
+      {
+        "command": "rotom.showReferences",
+        "title": "Rotom: Show References"
+      }
+    ],
+    "configuration": {
+      "title": "Rotom",
+      "properties": {
+        "rotom.lsp.path": {
+          "type": ["string", "null"],
+          "default": null,
+          "description": "Path to the rotom-lsp binary. If unset, searches $PATH, bundled binaries, and workspace target/ directory."
+        }
+      }
+    },
+    "configurationDefaults": {
+      "[rotom]": {
+        "editor.codeLens": true
+      }
+    }
   },
   "scripts": {
     "compile": "tsc -p ./",

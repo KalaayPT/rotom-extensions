@@ -21,7 +21,7 @@
     ["\"", "\""]
   ],
   "indentationRules": {
-    "increaseIndentPattern": "^\\s*(function|action|if|while|match|case|else)\\b",
+    "increaseIndentPattern": "^\\s*(script|action|if|while|match|case|else)\\b",
     "decreaseIndentPattern": "^\\s*(endif|endwhile|endmatch|EndMovement|End|Return|else)\\b"
   }
 }

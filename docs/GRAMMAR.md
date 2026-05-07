@@ -30,8 +30,8 @@ machine-readable grammar is `tree-sitter-rotom/grammar.js`.
 // Aliases (global)
 alias 0x800C as VAR_RESULT
 
-// Public function (jump table entry)
-function Main #1:
+// Public script (jump table entry)
+script Main #1:
     Message 1
     End
 

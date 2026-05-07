@@ -5,10 +5,11 @@ schema_version = 1
 authors = ["KalaayPT"]
 description = "Rotom language support for Zed"
 repository = "https://github.com/KalaayPT/rotom-extensions"
+languages = ["languages/rotom"]
 
 [grammars.rotom]
 repository = "https://github.com/KalaayPT/tree-sitter-rotom"
-rev = "main"
+rev = "9d453da6fa943a122fb4b6540de7219cbadc6d45"
 
 [language_servers.rotom-lsp]
 name = "Rotom LSP"
