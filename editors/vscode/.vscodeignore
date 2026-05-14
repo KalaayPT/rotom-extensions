@@ -1,6 +1,7 @@
 .vscode/**
 src/**
-node_modules/**
+node_modules/@types/**
+node_modules/typescript/**
 tsconfig.json
 package-lock.json
 *.vsix
