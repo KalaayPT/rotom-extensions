@@ -9,7 +9,7 @@ languages = ["languages/rotom"]
 
 [grammars.rotom]
 repository = "https://github.com/KalaayPT/tree-sitter-rotom"
-rev = "9d453da6fa943a122fb4b6540de7219cbadc6d45"
+rev = "fbff63816c1597d11c6949618743aa1c2b743f07"
 
 [language_servers.rotom-lsp]
 name = "Rotom LSP"

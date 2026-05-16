@@ -71,7 +71,14 @@
     },
     "strings": {
       "patterns": [
-        { "name": "string.quoted.double.rotom", "begin": "\"", "end": "\"" }
+        {
+          "name": "string.quoted.double.rotom",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            { "name": "constant.character.escape.rotom", "match": "\\\\\"" }
+          ]
+        }
       ]
     },
     "functions": {
