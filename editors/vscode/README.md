@@ -12,4 +12,4 @@
 { "rotom.lsp.path": "/path/to/rotom-lsp" }
 ```
 
-If unset, searches `$PATH`, bundled binary, then workspace `target/`.
+If unset, searches the extension `bin/` directory, workspace `target/` builds, then `$PATH`.

@@ -1,4 +1,4 @@
-; Rotom syntax highlighting (bundled in Zed extension)
+; Rotom syntax highlighting
 
 [
   "if" "then" "else" "endif"
@@ -46,4 +46,3 @@
 
 (command_statement name: (identifier) @function.call)
 (movement_statement command: (identifier) @function.call)
-(call_expression function: (identifier) @function.call)

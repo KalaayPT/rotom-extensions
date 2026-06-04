@@ -6,3 +6,4 @@ editors/zed/target/
 editors/zed/Cargo.lock
 editors/zed/extension.wasm
 editors/zed/grammars/
+nvim.log

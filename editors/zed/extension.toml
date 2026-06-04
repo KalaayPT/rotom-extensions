@@ -5,12 +5,15 @@ schema_version = 1
 authors = ["KalaayPT"]
 description = "Rotom language support for Zed"
 repository = "https://github.com/KalaayPT/rotom-extensions"
-languages = ["languages/rotom"]
+languages = ["languages/rotom", "languages/rotom-text-archive"]
 
 [grammars.rotom]
 repository = "https://github.com/KalaayPT/tree-sitter-rotom"
-rev = "fbff63816c1597d11c6949618743aa1c2b743f07"
+rev = "129e909ffaf0a6fbc91738c629f717bf84113f7f"
 
+[lib]
+kind = "Rust"
+
+# Do not list built-in "JSON" here — that breaks Zed's core JSON language (grammar name clash).
 [language_servers.rotom-lsp]
-name = "Rotom LSP"
-languages = ["Rotom"]
+languages = ["Rotom", "Rotom Text Archive"]

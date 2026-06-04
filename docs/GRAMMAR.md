@@ -22,7 +22,15 @@ machine-readable grammar is `tree-sitter-rotom/grammar.js`.
 
 ### Labels
 - Top-level: `Name:`
-- Inline/local: `.name:` or `.name`
+- Inline/local: `.name:`
+
+### Preprocessor Directives
+Directives are top-level declarations used for C constant resolution.
+
+```rotom
+#include "constants/items.h"
+#define STARTER_ITEM ITEM_POTION
+```
 
 ## Program Structure
 
@@ -41,7 +49,7 @@ Helper:
     Return
 
 // Action (movement block)
-action WalkAway
+action WalkAway:
     WalkDown 3
     FaceDown
 EndMovement

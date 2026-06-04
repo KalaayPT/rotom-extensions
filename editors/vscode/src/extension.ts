@@ -19,7 +19,7 @@ import {
 
 let client: LanguageClient | undefined;
 
-function resolveServerPath(_context: ExtensionContext): string | undefined {
+function resolveServerPath(context: ExtensionContext): string {
   const config = workspace.getConfiguration('rotom');
   const userPath = config.get<string>('lsp.path');
   if (userPath) {
@@ -30,50 +30,28 @@ function resolveServerPath(_context: ExtensionContext): string | undefined {
       `Configured rotom.lsp.path does not exist: ${userPath}`
     );
   }
-  return 'rotom-lsp';
-}
 
-function resolveDebugServerPath(context: ExtensionContext): string | undefined {
-  const config = workspace.getConfiguration('rotom');
-  const userPath = config.get<string>('lsp.path');
-  if (userPath && fs.existsSync(userPath)) {
-    return userPath;
-  }
-
-  const bundled = path.join(context.extensionPath, 'bin', 'rotom-lsp');
+  const executable = process.platform === 'win32' ? 'rotom-lsp.exe' : 'rotom-lsp';
+  const bundled = path.join(context.extensionPath, 'bin', executable);
   if (fs.existsSync(bundled)) {
     return bundled;
   }
 
-  if (workspace.workspaceFolders && workspace.workspaceFolders.length > 0) {
-    const wsRoot = workspace.workspaceFolders[0].uri.fsPath;
-
-    const debugBuild = path.join(wsRoot, 'target', 'debug', 'rotom-lsp');
-    if (fs.existsSync(debugBuild)) {
-      return debugBuild;
-    }
-
-    const releaseBuild = path.join(wsRoot, 'target', 'release', 'rotom-lsp');
-    if (fs.existsSync(releaseBuild)) {
-      return releaseBuild;
+  for (const folder of workspace.workspaceFolders ?? []) {
+    const wsRoot = folder.uri.fsPath;
+    for (const profile of ['debug', 'release']) {
+      const candidate = path.join(wsRoot, 'target', profile, executable);
+      if (fs.existsSync(candidate)) {
+        return candidate;
+      }
     }
   }
 
-  return 'rotom-lsp';
+  return executable;
 }
 
 export function activate(context: ExtensionContext) {
-  const serverCommand =
-    context.extensionMode === 1 // DevelopmentExtensionMode
-      ? resolveDebugServerPath(context)
-      : resolveServerPath(context);
-
-  if (!serverCommand) {
-    void window.showErrorMessage(
-      'Could not find rotom-lsp binary. Build it with `cargo build -p rotom-lsp` or set `rotom.lsp.path` in VS Code settings.'
-    );
-    return;
-  }
+  const serverCommand = resolveServerPath(context);
 
   const serverOptions: ServerOptions = {
     run: { command: serverCommand, transport: TransportKind.stdio },
@@ -81,9 +59,17 @@ export function activate(context: ExtensionContext) {
   };
 
   const clientOptions: LanguageClientOptions = {
-    documentSelector: [{ scheme: 'file', language: 'rotom' }],
+    documentSelector: [
+      { scheme: 'file', language: 'rotom' },
+      { scheme: 'file', language: 'json', pattern: '**/textArchives/**' },
+      { scheme: 'file', language: 'json', pattern: '**/res/text/**' },
+    ],
     synchronize: {
-      fileEvents: workspace.createFileSystemWatcher('**/*.rotom'),
+      fileEvents: [
+        workspace.createFileSystemWatcher('**/*.rotom'),
+        workspace.createFileSystemWatcher('**/textArchives/**/*.json'),
+        workspace.createFileSystemWatcher('**/res/text/**/*.json'),
+      ],
     },
     middleware: {
       provideCodeLenses: (document, token, next) => {
@@ -114,13 +100,6 @@ export function activate(context: ExtensionContext) {
   );
 
   client.start();
-
-  // Register a no-op command for non-actionable CodeLens clicks.
-  context.subscriptions.push(
-    commands.registerCommand('rotom.noop', () => {
-      // Intentionally empty — CodeLens title is purely informational.
-    })
-  );
 
   // Register command to show references from a CodeLens click.
   context.subscriptions.push(

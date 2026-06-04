@@ -60,7 +60,9 @@ uxie/                           # External dependency: C constant resolution
 
 **VS Code:** LSP sends `editor.action.showReferences` in CodeLens. The VS Code extension rewrites it to `rotom.showReferences`, which converts JSON args to VS Code `Uri`/`Position`/`Location` instances and calls the real command. Run `npm run compile` after TypeScript changes.
 
-**Zed:** Uses `worktree.which("rotom-lsp")` to resolve the binary. Grammar loaded from GitHub. CodeLens clicks are display-only — Zed does not support custom LSP command handlers.
+**Zed:** Uses `worktree.which("rotom-lsp")` to resolve the binary. Grammar loaded from GitHub. CodeLens reference counts display and clicks use Zed's built-in references UI.
+
+**Neovim:** `editors/neovim` — `require("rotom").setup()` registers `vim.lsp.config('rotom')`, archive JSON filetypes, tree-sitter queries, and `editor.action.showReferences` for CodeLens (same args as VS Code). Resolves `rotom-lsp` like VS Code (`lsp_path`, workspace `target/`, then `$PATH`).
 
 **Both must work:** never break one editor to fix the other.
 

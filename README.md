@@ -1,4 +1,4 @@
-# Rotom Language Tooling
+# Rotom Editor Extensions
 
 Editor support for the [Rotom](https://github.com/KalaayPT/rotom) scripting language — a compiler toolchain for Pokémon Generation 4 field scripts.
 
