@@ -1,6 +1,6 @@
 {
   "name": "rotom-vscode",
-  "displayName": "Rotom Language Support",
+  "displayName": "Rotoscript Support",
   "description": "Language support for the Rotom scripting language",
   "version": "0.1.0",
   "publisher": "Kalaay",
