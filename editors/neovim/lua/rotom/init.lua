@@ -45,11 +45,12 @@ function M.setup(opts)
 
   local bufnr = vim.api.nvim_get_current_buf()
   local path = vim.api.nvim_buf_get_name(bufnr)
+  local treesitter_ready = true
 
   -- Register parser before setting filetype so other FileType hooks (e.g.
   -- kickstart's nvim-treesitter) can load it.
   if opts.treesitter ~= false then
-    require('rotom.treesitter').ensure_parser({
+    treesitter_ready = require('rotom.treesitter').ensure_parser({
       install_parser = opts.install_parser,
     })
   end
@@ -63,14 +64,14 @@ function M.setup(opts)
   end
 
   if M._setup_done then
-    if opts.treesitter ~= false and vim.bo[bufnr].filetype == 'rotom' then
+    if opts.treesitter ~= false and treesitter_ready and vim.bo[bufnr].filetype == 'rotom' then
       require('rotom.treesitter').start_highlight(bufnr)
     end
     return
   end
   M._setup_done = true
 
-  if opts.treesitter ~= false then
+  if opts.treesitter ~= false and treesitter_ready then
     require('rotom.treesitter').setup({
       install_parser = opts.install_parser,
     })

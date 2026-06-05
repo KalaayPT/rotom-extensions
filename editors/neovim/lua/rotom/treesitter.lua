@@ -66,11 +66,19 @@ function M.install_parser()
     return M.register_parser()
   end
 
-  if vim.fn.executable('tree-sitter') ~= 1 then
-    vim.notify(
-      'rotom: tree-sitter CLI not found; install it to build the Rotom parser',
-      vim.log.levels.WARN
-    )
+  local cc = nil
+  local candidates = { 'cc', 'gcc', 'clang' }
+  if vim.env.CC and vim.env.CC ~= '' then
+    table.insert(candidates, 1, vim.env.CC)
+  end
+  for _, candidate in ipairs(candidates) do
+    if candidate and candidate ~= '' and vim.fn.executable(vim.split(candidate, ' ')[1]) == 1 then
+      cc = candidate
+      break
+    end
+  end
+  if not cc then
+    vim.notify('rotom: C compiler not found; install cc, gcc, clang, or set $CC to build the Rotom parser', vim.log.levels.WARN)
     return false
   end
 
@@ -106,12 +114,34 @@ function M.install_parser()
     end
   end
 
-  local build = vim.system({ 'tree-sitter', 'build', '-o', 'parser.so' }, {
+  local compile = vim.system(vim.list_extend(vim.split(cc, ' '), {
+    '-fPIC',
+    '-I',
+    'src',
+    '-c',
+    'src/parser.c',
+    '-o',
+    'parser.o',
+  }), {
     cwd = install_dir,
     text = true,
   }):wait()
-  if build.code ~= 0 then
-    vim.notify('rotom: tree-sitter build failed: ' .. (build.stderr or ''), vim.log.levels.ERROR)
+  if compile.code ~= 0 then
+    vim.notify('rotom: parser compile failed: ' .. (compile.stderr or ''), vim.log.levels.ERROR)
+    return false
+  end
+
+  local link = vim.system(vim.list_extend(vim.split(cc, ' '), {
+    '-shared',
+    'parser.o',
+    '-o',
+    'parser.so',
+  }), {
+    cwd = install_dir,
+    text = true,
+  }):wait()
+  if link.code ~= 0 then
+    vim.notify('rotom: parser link failed: ' .. (link.stderr or ''), vim.log.levels.ERROR)
     return false
   end
 

@@ -6,7 +6,7 @@ Neovim plugin for the [Rotom](https://github.com/KalaayPT/rotom) scripting langu
 
 - Neovim >= 0.11 (built-in `vim.lsp.config`) or 0.10 with [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
 - `rotom-lsp` on `$PATH`, or a workspace `target/{debug,release}/rotom-lsp` build
-- [tree-sitter CLI](https://tree-sitter.github.io/tree-sitter/creating-parsers#installing-the-cli) (only when installing the parser from source)
+- A C compiler (`cc`, `gcc`, or `clang`) to build the Tree-sitter parser from committed generated sources
 
 ## Installation
 
@@ -24,20 +24,11 @@ Neovim plugin for the [Rotom](https://github.com/KalaayPT/rotom) scripting langu
 }
 ```
 
-Do **not** use `ft = { "rotom" }` — the plugin registers that filetype itself, so lazy would never load.
+Do not use `ft = { "rotom" }`: the plugin registers the `rotom` filetype, so Lazy cannot use that filetype to decide when to load it.
 
-To lazy-load by filename instead:
-
+If you want to lazy-load by filename, replace `lazy = false` with:
 ```lua
-{
-  "KalaayPT/rotom-extensions",
-  name = "rotom.nvim",
-  event = { "BufReadPost *.rotom", "BufReadPost */textArchives/*.json", "BufReadPost */res/text/*.json" },
-  config = function(plugin)
-    vim.opt.rtp:prepend(plugin.dir .. "/editors/neovim")
-    require("rotom").setup()
-  end,
-}
+event = { "BufReadPost *.rotom", "BufReadPost */textArchives/*.json", "BufReadPost */res/text/*.json" },
 ```
 
 For local development, replace the repo string with `dir = vim.fn.expand("~/dev/rotom-extensions")`.
@@ -81,15 +72,13 @@ require("rotom").setup({
     -- on_attach = function(client, bufnr) end,
   },
 
-  -- Clone and build tree-sitter-rotom when the parser is missing (default: true)
-  install_parser = true,
-
   -- Map **/textArchives/** and **/res/text/** JSON to rotom_text_archive (default: true)
   archive_json = true,
 })
 ```
 
 Set `lsp = false` to skip the language server. Set `treesitter = false` to skip tree-sitter setup.
+Set `install_parser = false` only if you manage the Rotom Tree-sitter parser yourself or cannot allow the plugin to clone/build it.
 
 ## Features
 
@@ -98,18 +87,11 @@ Set `lsp = false` to skip the language server. Set `treesitter = false` to skip 
 | Diagnostics | Yes (via `rotom-lsp`) |
 | Completion / hover / signature help | Yes |
 | Go to definition | Yes |
-| Inlay hints | Yes (Neovim built-in) |
-| CodeLens reference counts | Yes — run with `grx` or `:lua vim.lsp.codelens.run()` |
+| Inlay hints | Yes |
+| CodeLens reference counts | Yes |
 | Text archive JSON (`textArchives/`, `res/text/`) | Yes — separate `rotom_text_archive` filetype |
 
 CodeLens clicks use Neovim's `editor.action.showReferences` handler (quickfix list + location preview), matching the VS Code extension behavior.
-
-## CodeLens
-
-Reference lenses are enabled on LSP attach. On the current line:
-
-- Default mapping: `grx`
-- Command: `:lua vim.lsp.codelens.run()`
 
 ## LSP binary resolution
 
