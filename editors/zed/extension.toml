@@ -9,7 +9,7 @@ languages = ["languages/rotom", "languages/rotom-text-archive"]
 
 [grammars.rotom]
 repository = "https://github.com/KalaayPT/tree-sitter-rotom"
-rev = "129e909ffaf0a6fbc91738c629f717bf84113f7f"
+rev = "16f2e4c6bc62ae774539568d38da5874c954f08e"
 
 [lib]
 kind = "Rust"

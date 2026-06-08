@@ -2,7 +2,7 @@
   "name": "rotom-vscode",
   "displayName": "Rotoscript Support",
   "description": "Language support for the Rotom scripting language",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "Kalaay",
   "license": "MIT",
   "repository": {
