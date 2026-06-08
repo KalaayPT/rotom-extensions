@@ -17,6 +17,7 @@
 
 (boolean) @boolean
 (number) @number
+(slot_id) @number
 (string) @string
 (escape_sequence) @escape
 (comment) @comment
@@ -25,7 +26,7 @@
   "==" "!=" "<=" ">=" "<" ">" "&&" "||" "and" "or"
   "+" "-" "*"
   "!" "not"
-  "(" ")" "," "#" ":"
+  "(" ")" "[" "]" "," "#" ":"
 ] @operator
 
 (preprocessor_directive) @preproc

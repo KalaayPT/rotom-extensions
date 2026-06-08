@@ -38,10 +38,6 @@ jobs:
         if: github.event_name == 'release' || inputs.target == 'all' || inputs.target == 'marketplace'
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
-      - run: npx ovsx create-namespace Kalaay -p "$OVSX_PAT" || true
-        if: github.event_name == 'release' || inputs.target == 'all' || inputs.target == 'open-vsx'
-        env:
-          OVSX_PAT: ${{ secrets.OVSX_PAT }}
       - run: npx ovsx publish rotom-vscode.vsix -p "$OVSX_PAT"
         if: github.event_name == 'release' || inputs.target == 'all' || inputs.target == 'open-vsx'
         env:
