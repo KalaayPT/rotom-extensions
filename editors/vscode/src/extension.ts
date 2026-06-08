@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { execSync } from 'child_process';
 import {
   ExtensionContext,
   workspace,
@@ -19,7 +20,7 @@ import {
 
 let client: LanguageClient | undefined;
 
-function resolveServerPath(context: ExtensionContext): string {
+function resolveServerPath(context: ExtensionContext): string | null {
   const config = workspace.getConfiguration('rotom');
   const userPath = config.get<string>('lsp.path');
   if (userPath) {
@@ -47,11 +48,24 @@ function resolveServerPath(context: ExtensionContext): string {
     }
   }
 
-  return executable;
+  // VS Code may not inherit the user's shell PATH (common with fish/nix).
+  // Ask the login shell as a last resort.
+  try {
+    const shell = process.env.SHELL ?? '/bin/sh';
+    const resolved = execSync(`${shell} -lc "which ${executable}"`, { encoding: 'utf8' }).trim();
+    if (resolved && fs.existsSync(resolved)) {
+      return resolved;
+    }
+  } catch { /* not found via shell either */ }
+
+  return null;
 }
 
 export function activate(context: ExtensionContext) {
   const serverCommand = resolveServerPath(context);
+  if (!serverCommand) {
+    return;
+  }
 
   const serverOptions: ServerOptions = {
     run: { command: serverCommand, transport: TransportKind.stdio },
