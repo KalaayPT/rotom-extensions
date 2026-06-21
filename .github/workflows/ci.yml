@@ -24,22 +24,6 @@ jobs:
       - run: npm run compile
       - run: npx @vscode/vsce package --out /tmp/rotom-vscode.vsix
 
-  zed:
-    name: Zed
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: editors/zed
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: wasm32-wasip1
-      - uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: editors/zed
-      - run: cargo build --target wasm32-wasip1 --locked
-
   neovim:
     name: Neovim
     runs-on: ubuntu-latest

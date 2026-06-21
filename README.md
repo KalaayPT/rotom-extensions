@@ -7,5 +7,5 @@ Editor support for the [Rotom](https://github.com/KalaayPT/rotom) scripting lang
 | Package | Purpose |
 |---------|---------|
 | [editors/vscode/](editors/vscode/) | VS Code extension (LSP client + TextMate grammar) |
-| [editors/zed/](editors/zed/) | Zed extension (tree-sitter grammar + LSP launcher) |
 | [editors/neovim/](editors/neovim/) | Neovim Lua plugin (tree-sitter + LSP setup) |
+| [KalaayPT/rotom-zed](https://github.com/KalaayPT/rotom-zed) | Zed extension (tree-sitter grammar + LSP launcher) |

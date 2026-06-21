@@ -31,9 +31,9 @@ tree-sitter-rotom/              # Standalone Tree-sitter grammar
 rotom-extensions/               # Editor integrations (thin adapters)
 ├── editors/vscode/             # VS Code extension
 │   └── src/extension.ts        # Spawns rotom-lsp, handles CodeLens clicks
-└── editors/zed/                # Zed extension
-    ├── extension.toml          # Grammar + LSP registration
-    └── src/lib.rs              # WASM extension spawning rotom-lsp
+└── editors/neovim/             # Neovim Lua plugin
+
+# Zed extension lives in its own repo: KalaayPT/rotom-zed
 
 uxie/                           # External dependency: C constant resolution
 └── src/c_parser/symbol_table.rs # SymbolTable, load_c_directives_with_handler()
@@ -84,7 +84,7 @@ uxie/                           # External dependency: C constant resolution
 cargo test -p rotom --lib -- --test-threads=1
 cargo clippy -p rotom -p rotom-lsp
 cargo build -p rotom-lsp
-cargo build --target wasm32-wasip1          # in editors/zed
+cargo build --target wasm32-wasip1 --locked # in rotom-zed
 npm run compile                              # in editors/vscode
 tree-sitter generate && tree-sitter build   # in tree-sitter-rotom
 ```
